@@ -14,9 +14,6 @@ jobs:
     env:
       IMAGE_NAME: sample-app
     steps:
-      - if: startWith( github.ref, 'refs/tags/' )
-        env:
-          REF: ${{ github.ref }}
       - name: checkout
         uses: actions/checkout@v2
 
@@ -29,6 +26,10 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CR_PAT }}
+
+      - if: startWith( github.ref, 'refs/tags/' )
+        env:
+          REF: ${{ github.ref }}
 
       - name: Build and push
         uses: docker/build-push-action@v2
