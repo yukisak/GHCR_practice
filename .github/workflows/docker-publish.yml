@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: sample-app
-      REF: ${{ github.ref }}
     steps:
       - name: Set Version
         id: version
@@ -31,6 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
+          file: ./app
           push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
