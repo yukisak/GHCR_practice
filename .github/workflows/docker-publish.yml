@@ -4,7 +4,7 @@ on:
     tags:
       - "[0-9].[0-9]+.[0-9]+"
     branches:
-      - "aaa"
+      - aaa
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
