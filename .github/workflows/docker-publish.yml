@@ -10,6 +10,11 @@ jobs:
       IMAGE_NAME: sample-app
       REF: ${{ github.ref }}
     steps:
+      - name: Set Version
+        run: |
+          VERSION=$(echo ${{ github.ref }} | sed -e "s#refs/tags/##g")
+          echo ::set-output name=version::$VERSION
+
       - name: checkout
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
@@ -27,5 +32,5 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
-            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:$VERSION
             ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:"${REF##*/}"
